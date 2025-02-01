@@ -71,12 +71,23 @@
         .delete-btn:hover {
             background-color: #c82333;
         }
+        .edit-btn {
+            background-color: #ffc107;
+        }
+        .edit-btn:hover {
+            background-color: #e0a800;
+        }
         input, select {
             padding: 8px;
             margin: 5px 0;
             width: 100%;
             border: 1px solid #ccc;
             border-radius: 5px;
+        }
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         footer {
             text-align: center;
@@ -126,8 +137,10 @@
             <input type="date" id="date" name="date" required><br>
             
             <label>Type:</label>
-            <input type="radio" name="type" value="Income"> Income
-              <input type="radio" name="type" value="Expense"> Expense<br><br>
+            <div class="radio-group">
+                <input type="radio" name="type" value="Income" id="income" required> <label for="income">Income</label>
+                <input type="radio" name="type" value="Expense" id="expense" required> <label for="expense">Expense</label>
+            </div><br>
             
             <label for="status">Status:</label>
             <select id="status">
@@ -157,5 +170,29 @@
     <footer>
         <p>Personal Budget Tracker - Version 1.0</p>
     </footer>
+    
+    <script>
+        function addEntry() {
+            let table = document.getElementById("budget-table");
+            let amount = document.getElementById("amount").value;
+            let category = document.getElementById("category").value;
+            let description = document.getElementById("description").value;
+            let date = document.getElementById("date").value;
+            let type = document.querySelector('input[name="type"]:checked').value;
+            let status = document.getElementById("status").value;
+
+            let row = table.insertRow(-1);
+            row.innerHTML = `<td>${category}</td><td>${amount}</td><td>${description}</td><td>${date}</td><td>${type}</td><td>${status}</td><td><button class='edit-btn' onclick='editRow(this)'>Edit</button> <button class='delete-btn' onclick='deleteRow(this)'>Delete</button></td>`;
+        }
+        
+        function deleteRow(btn) {
+            let row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+        
+        function editRow(btn) {
+            alert("Editing feature will be implemented soon!");
+        }
+    </script>
 </body>
 </html>
